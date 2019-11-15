@@ -6,12 +6,12 @@
 #ifndef ESC
 #define ESC "\033"
 #elif ESC != "\033"
-#error SYMBOLIC CONSTANT 'ESC' MUST BE SET TO "\033".
+#error SYMBOLIC CONSTANT 'ESC' MUST BE SET TO "\033"!
 #endif
 
-namespace Lib
+namespace Fosl
 {
-	namespace TTY
+	namespace Tty
 	{
 		enum class DISPLAY_ATTRIBUTE : uint8_t
 		{
@@ -155,38 +155,34 @@ namespace Lib
 			LOG_START,
 			LOG_STOP,
 		};
-	}
 
-	namespace Tty
-	{
 		struct CursorPosition { uint16_t x, y; };
 
-		class Tty
+		class Base
 		{
-			public: // CONSTRUCTORS
-				Tty(void) = default;
-			public: // DESTRUCTOR
-				~Tty(void) = default;
+			public:
+				Base(FILE* initial_stream);
+			public:
+				virtual ~Base(void) = default;
 
-			public: // GETTERS
-				uint8_t device_code(void);
-				TTY::DEVICE_STATUS device_status(void);
-				CursorPosition cursor_position(void);
-			public: // SETTERS
-				void define_key(const char* key, const char* definition);
-				void line_wrap(bool enable);
-				void cursor_position(CursorPosition new_cursor_position);
+			public:
+				uint8_t get_device_code(void);
+				DEVICE_STATUS get_device_status(void);
+				CursorPosition get_cursor_position(void);
+			public:
+				void set_line_wrap(bool enable);
+				void set_cursor_position(CursorPosition new_cursor_position);
 
-			public: // METHODS
+			public:
 				void reset_device(void);
 				void print_screen(void);
 				void print_line(void);
-				void shift_cursor(TTY::CURSOR::DIRECTION direction, uint16_t magnitude);
+				void shift_cursor(CURSOR::DIRECTION direction, uint16_t magnitude);
 				void save_cursor(void);
 				void save_cursor_and_attrs(void);
 				void restore_cursor(void);
 				void restore_cursor_and_attrs(void);
-				void scroll(TTY::SCROLL::DIRECTION direction, uint16_t magnitude);
+				void define_key(const char* key, const char* definition);
 				//
 				void putchar(int c);
 				int  getchar(void);
@@ -195,21 +191,77 @@ namespace Lib
 				int printf(const char* format, ...);
 				int scanf (const char* format, ...);
 
-			public: // OPERATORS
+			public:
 				template <typename ... Args>
-				void operator()(Args ... args);
-				void operator()(TTY::TAB tab);
-				void operator()(TTY::ERASE erase);
-				void operator()(TTY::PRINT print);
+				Base& operator()(Args ... args);
+				Base& operator()(TAB tab);
+				Base& operator()(ERASE erase);
+				Base& operator()(PRINT print);
+				Base& operator()(SCROLL::DIRECTION direction, uint16_t magnitude);
 
 			private:
 				template <typename Arg, typename ... Args>
 				void send_display_attributes(Arg arg, Args ... args);
 				template <typename Arg>
 				void send_display_attributes(Arg arg);
+
+			private:
+				FILE* stream;
 		};
 
-		#include "tty-impl.cpp"
+		template <typename ... Args>
+		Base& Base::operator()(Args ... args)
+		{
+			printf(ESC"[");
+			send_display_attributes(args ...);
+			printf("m");
+
+			return *this;
+		}
+
+		inline void Base::putchar(int c)
+		{
+			putc(c, stream);
+		}
+		inline int Base::getchar(void)
+		{
+			return getc(stream);
+		}
+		inline void Base::puts(const char* s)
+		{
+			fputs(s, stream);
+			putc('\n', stream);
+		}
+		inline char* Base::gets(char* s, int size)
+		{
+			return fgets(s, size, stream);
+		}
+		inline int Base::printf(const char* format, ...)
+		{
+			va_list ap;
+			va_start(ap, format);
+			return vfprintf(stream, format, ap);
+			va_end(ap);
+		}
+		inline int Base::scanf(const char* format, ...)
+		{
+			va_list ap;
+			va_start(ap, format);
+			return vfprintf(stream, format, ap);
+			va_end(ap);
+		}
+
+		template <typename Arg, typename ... Args>
+		void Base::send_display_attributes(Arg arg, Args ... args)
+		{
+			printf("%u;", static_cast<uint8_t>(arg));
+			send_display_attributes(args ...);
+		}
+		template <typename Arg>
+		void Base::send_display_attributes(Arg arg)
+		{
+			printf("%u", static_cast<uint8_t>(arg));
+		}
 	}
 }
 
