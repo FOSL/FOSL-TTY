@@ -1,6 +1,6 @@
 #include "tty.h"
 
-namespace Fosl
+namespace fosl
 {
 	namespace Tty
 	{

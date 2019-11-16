@@ -9,7 +9,7 @@
 #error SYMBOLIC CONSTANT 'ESC' MUST BE SET TO "\033"!
 #endif
 
-namespace Fosl
+namespace fosl
 {
 	namespace Tty
 	{
