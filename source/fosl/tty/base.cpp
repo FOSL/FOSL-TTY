@@ -1,8 +1,8 @@
-#include "fosl/tty/Base.h"
+#include "fosl/tty/base.h"
 
 namespace fosl
 {
-	namespace tty
+	namespace Tty
 	{
 		// TODO: IMPLEMENT BASED ON: http://www.termsys.demon.co.uk/vtansi.htm#print
 

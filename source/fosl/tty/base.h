@@ -1,7 +1,7 @@
 #ifndef _LIB_TTY_H_
 #define _LIB_TTY_H_
 
-#include <util.h>
+#include <fosl/util.h>
 
 #ifndef ESC
 #define ESC "\033"
@@ -11,7 +11,7 @@
 
 namespace fosl
 {
-	namespace tty
+	namespace Tty
 	{
 		enum class DISPLAY_ATTRIBUTE : uint8_t
 		{
