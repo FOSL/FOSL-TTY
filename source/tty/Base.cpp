@@ -2,7 +2,7 @@
 
 namespace fosl
 {
-	namespace Tty
+	namespace tty
 	{
 		// TODO: IMPLEMENT BASED ON: http://www.termsys.demon.co.uk/vtansi.htm#print
 

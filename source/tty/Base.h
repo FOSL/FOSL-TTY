@@ -11,7 +11,7 @@
 
 namespace fosl
 {
-	namespace Tty
+	namespace tty
 	{
 		enum class DISPLAY_ATTRIBUTE : uint8_t
 		{

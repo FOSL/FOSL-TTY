@@ -3,8 +3,8 @@ project(tty)
 add_library(
 	${PROJECT_NAME}
 
-	./tty.cpp
-	./tty.h
+	./tty/Base.cpp
+	./tty/Base.h
 )
 
 target_include_directories(
@@ -14,11 +14,4 @@ target_include_directories(
 
 	${util_SOURCE_DIR}
 	${math_SOURCE_DIR}
-)
-
-set_target_properties(
-	${PROJECT_NAME}
-
-	PROPERTIES
-	COMPILE_FLAGS "${MCU}"
 )
