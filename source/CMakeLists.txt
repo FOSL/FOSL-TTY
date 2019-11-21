@@ -3,6 +3,7 @@ project(fosl-tty)
 add_library(
 	${PROJECT_NAME}
 
+	./fosl/tty.h
 	./fosl/tty/base.cpp
 	./fosl/tty/base.h
 )

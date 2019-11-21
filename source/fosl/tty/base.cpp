@@ -34,6 +34,7 @@ namespace fosl
 		}
 		void Base::set_cursor_position(CursorPosition new_cursor_position)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 
 		void Base::reset_device(void)
@@ -42,26 +43,35 @@ namespace fosl
 		}
 		void Base::print_screen(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::print_line(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::shift_cursor(CURSOR::DIRECTION direction, uint16_t magnitude)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::save_cursor(void)
 		{
-		} void Base::save_cursor_and_attrs(void)
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
+		}
+		void Base::save_cursor_and_attrs(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::restore_cursor(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::restore_cursor_and_attrs(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 		void Base::define_key(const char* key, const char* definition)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
 
 		Base& Base::operator()(TAB tab)
