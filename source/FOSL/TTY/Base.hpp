@@ -1,7 +1,7 @@
-#ifndef _FOSL_TTY_H_
-#define _FOSL_TTY_H_
+#ifndef _FOSL_TTY_BASE_HPP_
+#define _FOSL_TTY_BASE_HPP_
 
-#include <fosl/util.h>
+#include <FOSL/Utilities.hpp>
 
 #ifndef ESC
 #define ESC "\033"
@@ -9,9 +9,9 @@
 #error SYMBOLIC CONSTANT 'ESC' MUST BE SET TO "\033"!
 #endif
 
-namespace fosl
+namespace FOSL
 {
-	namespace Tty
+	namespace TTY
 	{
 		enum class DISPLAY_ATTRIBUTE : uint8_t
 		{
@@ -171,16 +171,17 @@ namespace fosl
 				CursorPosition get_cursor_position(void);
 			public:
 				void set_line_wrap(bool enable);
-				void set_cursor_position(CursorPosition new_cursor_position);
+				void set_cursor_position(CursorPosition cursor_position);
+				void set_cursor_position(uint16_t x, uint16_t y);
 
 			public:
 				void reset_device(void);
 				void print_screen(void);
 				void print_line(void);
-				void shift_cursor(CURSOR::DIRECTION direction, uint16_t magnitude);
-				void save_cursor(void);
+				void shift_cursor_position(CURSOR::DIRECTION direction, uint16_t magnitude);
+				void save_cursor_position(void);
 				void save_cursor_and_attrs(void);
-				void restore_cursor(void);
+				void restore_cursor_position(void);
 				void restore_cursor_and_attrs(void);
 				void define_key(const char* key, const char* definition);
 				//
@@ -209,59 +210,7 @@ namespace fosl
 				FILE* stream;
 		};
 
-		template <typename ... Args>
-		Base& Base::operator()(Args ... args)
-		{
-			printf(ESC"[");
-			send_display_attributes(args ...);
-			printf("m");
-
-			return *this;
-		}
-
-		inline void Base::putchar(int c)
-		{
-			putc(c, stream);
-		}
-		inline int Base::getchar(void)
-		{
-			return getc(stream);
-		}
-		inline void Base::puts(const char* s)
-		{
-			fputs(s, stream);
-			putc('\n', stream);
-		}
-		inline char* Base::gets(char* s, int size)
-		{
-			return fgets(s, size, stream);
-		}
-		inline int Base::printf(const char* format, ...)
-		{
-			va_list ap;
-			va_start(ap, format);
-			return vfprintf(stream, format, ap);
-			va_end(ap);
-		}
-		inline int Base::scanf(const char* format, ...)
-		{
-			va_list ap;
-			va_start(ap, format);
-			return vfprintf(stream, format, ap);
-			va_end(ap);
-		}
-
-		template <typename Arg, typename ... Args>
-		void Base::send_display_attributes(Arg arg, Args ... args)
-		{
-			printf("%u;", static_cast<uint8_t>(arg));
-			send_display_attributes(args ...);
-		}
-		template <typename Arg>
-		void Base::send_display_attributes(Arg arg)
-		{
-			printf("%u", static_cast<uint8_t>(arg));
-		}
+		#include "FOSL/TTY/Base-impl.hpp"
 	}
 }
 

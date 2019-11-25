@@ -1,3 +1,11 @@
-# fosl-tty
+# FOSL-TTY
 
-Abstraction for TTY codes.
+## Description
+
+Enables simple communication with TTY.
+
+## Dependencies
+
+* [FOSL-Utilities]
+
+[FOSL-Utilities]: https://github.com/martinmake/FOSL-Utilities

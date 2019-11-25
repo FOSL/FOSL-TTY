@@ -1,11 +1,11 @@
-project(fosl-tty)
+project(FOSL-TTY)
 
 add_library(
 	${PROJECT_NAME}
 
-	./fosl/tty.h
-	./fosl/tty/base.cpp
-	./fosl/tty/base.h
+	./FOSL/TTY.hpp
+	./FOSL/TTY/Base.cpp
+	./FOSL/TTY/Base.hpp
 )
 
 target_include_directories(
@@ -17,5 +17,5 @@ target_include_directories(
 target_link_libraries(
 	${PROJECT_NAME}
 
-	fosl-util
+	FOSL-Utilities
 )

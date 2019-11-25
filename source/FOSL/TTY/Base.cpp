@@ -1,8 +1,8 @@
-#include "fosl/tty/base.h"
+#include "FOSL/TTY/Base.hpp"
 
-namespace fosl
+namespace FOSL
 {
-	namespace Tty
+	namespace TTY
 	{
 		// TODO: IMPLEMENT BASED ON: http://www.termsys.demon.co.uk/vtansi.htm#print
 
@@ -13,14 +13,17 @@ namespace fosl
 
 		uint8_t Base::get_device_code(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 			return 0;
 		}
 		DEVICE_STATUS Base::get_device_status(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 			return DEVICE_STATUS::OK;
 		}
 		CursorPosition Base::get_cursor_position(void)
 		{
+			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 			return CursorPosition { 0, 0 };
 		}
 
@@ -32,9 +35,13 @@ namespace fosl
 				case false: printf(ESC"7l");
 			}
 		}
-		void Base::set_cursor_position(CursorPosition new_cursor_position)
+		void Base::set_cursor_position(CursorPosition cursor_position)
 		{
-			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
+			printf(ESC"[%u;%uf", cursor_position.y, cursor_position.x);
+		}
+		void Base::set_cursor_position(uint16_t x, uint16_t y)
+		{
+			printf(ESC"[%u;%uf", y, x);
 		}
 
 		void Base::reset_device(void)
@@ -49,21 +56,21 @@ namespace fosl
 		{
 			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
-		void Base::shift_cursor(CURSOR::DIRECTION direction, uint16_t magnitude)
+		void Base::shift_cursor_position(CURSOR::DIRECTION direction, uint16_t magnitude)
 		{
 			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
-		void Base::save_cursor(void)
+		void Base::save_cursor_position(void)
 		{
-			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
+			printf(ESC"[s");
 		}
 		void Base::save_cursor_and_attrs(void)
 		{
 			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
 		}
-		void Base::restore_cursor(void)
+		void Base::restore_cursor_position(void)
 		{
-			assert(false && "THIS METHOD IS YET TO BE IMPLEMENTED!");
+			printf(ESC"[u");
 		}
 		void Base::restore_cursor_and_attrs(void)
 		{
