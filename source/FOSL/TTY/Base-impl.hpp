@@ -1,7 +1,7 @@
 template <typename ... Args>
 Base& Base::operator()(Args ... args)
 {
-	printf(ESC"[");
+	printf("\033[");
 	send_display_attributes(args ...);
 	printf("m");
 

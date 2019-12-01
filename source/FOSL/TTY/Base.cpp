@@ -31,22 +31,22 @@ namespace FOSL
 		{
 			switch (enable)
 			{
-				case true:  printf(ESC"7h");
-				case false: printf(ESC"7l");
+				case true:  printf("\0337h");
+				case false: printf("\0337l");
 			}
 		}
 		void Base::set_cursor_position(CursorPosition cursor_position)
 		{
-			printf(ESC"[%u;%uf", cursor_position.y, cursor_position.x);
+			printf("\033[%u;%uf", cursor_position.y, cursor_position.x);
 		}
 		void Base::set_cursor_position(uint16_t x, uint16_t y)
 		{
-			printf(ESC"[%u;%uf", y, x);
+			printf("\033[%u;%uf", y, x);
 		}
 
 		void Base::reset_device(void)
 		{
-			printf(ESC"c");
+			printf("\033c");
 		}
 		void Base::print_screen(void)
 		{
@@ -62,7 +62,7 @@ namespace FOSL
 		}
 		void Base::save_cursor_position(void)
 		{
-			printf(ESC"[s");
+			printf("\033[s");
 		}
 		void Base::save_cursor_and_attrs(void)
 		{
@@ -70,7 +70,7 @@ namespace FOSL
 		}
 		void Base::restore_cursor_position(void)
 		{
-			printf(ESC"[u");
+			printf("\033[u");
 		}
 		void Base::restore_cursor_and_attrs(void)
 		{
@@ -90,22 +90,22 @@ namespace FOSL
 			switch (erase)
 			{
 				case ERASE::TO_END_OF_LINE:
-					printf(ESC"[K");
+					printf("\033[K");
 					break;
 				case ERASE::FROM_START_OF_LINE:
-					printf(ESC"[1K");
+					printf("\033[1K");
 					break;
 				case ERASE::CURRENT_LINE:
-					printf(ESC"[2K");
+					printf("\033[2K");
 					break;
 				case ERASE::TO_TOP_OF_THE_SCREEN:
-					printf(ESC"[J");
+					printf("\033[J");
 					break;
 				case ERASE::TO_BOTTOM_OF_THE_SCREEN:
-					printf(ESC"[1J");
+					printf("\033[1J");
 					break;
 				case ERASE::SCREEN:
-					printf(ESC"[2J");
+					printf("\033[2J");
 					break;
 			}
 

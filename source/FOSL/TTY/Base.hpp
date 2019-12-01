@@ -3,12 +3,6 @@
 
 #include <FOSL/Utilities.hpp>
 
-#ifndef ESC
-#define ESC "\033"
-#elif ESC != "\033"
-#error SYMBOLIC CONSTANT 'ESC' MUST BE SET TO "\033"!
-#endif
-
 namespace FOSL
 {
 	namespace TTY
