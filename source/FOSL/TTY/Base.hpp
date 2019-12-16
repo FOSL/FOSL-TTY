@@ -2,6 +2,7 @@
 #define _FOSL_TTY_BASE_HPP_
 
 #include <FOSL/Utilities.hpp>
+#include <FOSL/Math/Vector2.hpp>
 
 namespace FOSL
 {
@@ -150,25 +151,27 @@ namespace FOSL
 			LOG_STOP,
 		};
 
-		struct CursorPosition { uint16_t x, y; };
+		using CursorPosition = FOSL::Math::Vector2<uint16_t>;
 
 		class Base
 		{
-			public:
+			public: // CONSTRUCTORS
 				Base(FILE* initial_stream);
-			public:
+			public: // DESTRUCTOR
 				virtual ~Base(void) = default;
 
-			public:
+			public: // GETTERS
 				uint8_t get_device_code(void);
 				DEVICE_STATUS get_device_status(void);
 				CursorPosition get_cursor_position(void);
-			public:
+			public: // SETTERS
+				template <typename ... Args>
+				void set(Args ... args);
 				void set_line_wrap(bool enable);
 				void set_cursor_position(CursorPosition cursor_position);
 				void set_cursor_position(uint16_t x, uint16_t y);
 
-			public:
+			public: // METHODS
 				void reset_device(void);
 				void print_screen(void);
 				void print_line(void);
@@ -178,29 +181,26 @@ namespace FOSL
 				void restore_cursor_position(void);
 				void restore_cursor_and_attrs(void);
 				void define_key(const char* key, const char* definition);
-				//
+			public: // METHODS
 				void putchar(int c);
 				int  getchar(void);
 				void  puts(const char* s);
 				char* gets(      char* s, int size);
 				int printf(const char* format, ...);
 				int scanf (const char* format, ...);
-
-			public:
-				template <typename ... Args>
-				Base& operator()(Args ... args);
-				Base& operator()(TAB tab);
-				Base& operator()(ERASE erase);
-				Base& operator()(PRINT print);
-				Base& operator()(SCROLL::DIRECTION direction, uint16_t magnitude);
-
-			private:
+			private: // METHODS
 				template <typename Arg, typename ... Args>
 				void send_display_attributes(Arg arg, Args ... args);
 				template <typename Arg>
 				void send_display_attributes(Arg arg);
 
-			private:
+			public: // OPERATORS
+				Base& operator()(TAB tab);
+				Base& operator()(ERASE erase);
+				Base& operator()(PRINT print);
+				Base& operator()(SCROLL::DIRECTION direction, uint16_t magnitude);
+
+			private: // VARIABLES
 				FILE* stream;
 		};
 

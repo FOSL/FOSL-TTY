@@ -1,13 +1,13 @@
+// SETTERS
 template <typename ... Args>
-Base& Base::operator()(Args ... args)
+void Base::set(Args ... args)
 {
 	printf("\033[");
 	send_display_attributes(args ...);
 	printf("m");
-
-	return *this;
 }
 
+// METHODS
 inline void Base::putchar(int c)
 {
 	putc(c, stream);
@@ -39,7 +39,7 @@ inline int Base::scanf(const char* format, ...)
 	return vfprintf(stream, format, ap);
 	va_end(ap);
 }
-
+// METHODS
 template <typename Arg, typename ... Args>
 void Base::send_display_attributes(Arg arg, Args ... args)
 {
