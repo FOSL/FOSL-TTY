@@ -6,6 +6,6 @@ Enables simple communication with TTY.
 
 ## Dependencies
 
-* [FOSL-Utilities]
+* [FOSL-math]
 
-[FOSL-Utilities]: https://github.com/martinmake/FOSL-Utilities
+[FOSL-math]: https://github.com/martinmake/FOSL-math

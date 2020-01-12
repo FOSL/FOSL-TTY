@@ -1,8 +1,8 @@
 #ifndef _FOSL_TTY_BASE_HPP_
 #define _FOSL_TTY_BASE_HPP_
 
-#include <FOSL/Utilities.hpp>
-#include <FOSL/Math/Vector2.hpp>
+#include <FOSL/utility.hpp>
+#include <FOSL/math/vector2.hpp>
 
 namespace FOSL
 {
@@ -151,24 +151,24 @@ namespace FOSL
 			LOG_STOP,
 		};
 
-		using CursorPosition = FOSL::Math::Vector2<uint16_t>;
+		using cursor_position = FOSL::math::vector2<uint16_t>;
 
-		class Base
+		class base
 		{
 			public: // CONSTRUCTORS
-				Base(FILE* initial_stream);
+				base(FILE *initial_stream);
 			public: // DESTRUCTOR
-				virtual ~Base(void) = default;
+				virtual ~base(void) = default;
 
 			public: // GETTERS
 				uint8_t get_device_code(void);
 				DEVICE_STATUS get_device_status(void);
-				CursorPosition get_cursor_position(void);
+				cursor_position get_cursor_position(void);
 			public: // SETTERS
-				template <typename ... Args>
-				void set(Args ... args);
+				template <typename ...arg_ts>
+				void set(arg_ts... args);
 				void set_line_wrap(bool enable);
-				void set_cursor_position(CursorPosition cursor_position);
+				void set_cursor_position(cursor_position cursor_position);
 				void set_cursor_position(uint16_t x, uint16_t y);
 
 			public: // METHODS
@@ -180,31 +180,31 @@ namespace FOSL
 				void save_cursor_and_attrs(void);
 				void restore_cursor_position(void);
 				void restore_cursor_and_attrs(void);
-				void define_key(const char* key, const char* definition);
+				void define_key(char const*key, char const*definition);
 			public: // METHODS
 				void putchar(int c);
 				int  getchar(void);
-				void  puts(const char* s);
-				char* gets(      char* s, int size);
-				int printf(const char* format, ...);
-				int scanf (const char* format, ...);
+				void  puts(char const*s);
+				char *gets(char      *s, int size);
+				int printf(char const*format, ...);
+				int scanf (char const*format, ...);
 			private: // METHODS
-				template <typename Arg, typename ... Args>
-				void send_display_attributes(Arg arg, Args ... args);
-				template <typename Arg>
-				void send_display_attributes(Arg arg);
+				template <typename arg_t, typename ...arg_ts>
+				void send_display_attributes(arg_t arg, arg_ts... args);
+				template <typename arg_t>
+				void send_display_attributes(arg_t arg);
 
 			public: // OPERATORS
-				Base& operator()(TAB tab);
-				Base& operator()(ERASE erase);
-				Base& operator()(PRINT print);
-				Base& operator()(SCROLL::DIRECTION direction, uint16_t magnitude);
+				base &operator()(TAB tab);
+				base &operator()(ERASE erase);
+				base &operator()(PRINT print);
+				base &operator()(SCROLL::DIRECTION direction, uint16_t magnitude);
 
 			private: // VARIABLES
-				FILE* stream;
+				FILE *stream;
 		};
 
-		#include "FOSL/TTY/Base-impl.hpp"
+		#include "FOSL/TTY/base-impl.hpp"
 	}
 }
 
